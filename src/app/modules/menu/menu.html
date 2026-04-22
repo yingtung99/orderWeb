@@ -35,7 +35,7 @@
                                         {{ item.star }}<span class="dot">·</span>{{item.category}}
                                         <img class="category" [src]="item.category_icon" alt="">
                                     </small>
-                                    <button class="add-btn" type="button" (click)="openDetail(item)">
+                                    <button class="add-btn" type="button" (click)="openDetail(item); $event.stopPropagation()">
                                         <img class="icon" src="assets/icons/add.svg" alt="">
                                     </button>
                                 </div>
@@ -56,7 +56,7 @@
 
                             <div class="food-meta gap-2">
                                 <div class="price">${{ item.price }}</div>
-                                <button class="add-btn" type="button" (click)="openDetail(item)">
+                                <button class="add-btn" type="button" (click)="openDetail(item); $event.stopPropagation()">
                                     <img class="icon" src="assets/icons/add.svg" alt="">
                                 </button>
                             </div>

@@ -28,8 +28,6 @@ export class FoodDetailModal {
   protected selectedSaladProteins: string[] = []; // 已選沙拉主食（複選）
   protected selectedSaladVeggies: string[] = []; // 已選沙拉蔬菜（複選）
 
-  
-
   // 套餐選項
   setOptions: SetOption[] = [
     { name: 'A 套餐（薯條 + 飲料）', price: 70 },
