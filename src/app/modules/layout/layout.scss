@@ -1,0 +1,13 @@
+.layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: var(--bg-white);
+}
+
+.main-content {
+  height: 100%;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

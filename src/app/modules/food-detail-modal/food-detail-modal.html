@@ -1,0 +1,294 @@
+<div class="modal-food-detail" (click)="close.emit()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <button class="close-btn" type="button" (click)="close.emit()">
+      <img src="assets/icons/close.svg" alt="close">
+    </button>
+    <div class="modal-scroll">
+      <div class="detail-hero">
+      </div>
+
+      <div class="detail-body">
+        <img class="food-img" [src]="food.image" [alt]="food.name">
+        <h4 class="food-title">{{ food.name }}</h4>
+        <div class="meta-row">
+          @if (food.star) {
+            <div class="meta-item">
+              <img class="star" src="assets/icons/star.svg" alt="star">
+              <span>{{ food.star }}</span>
+            </div>
+            <span class="dot">·</span>
+          }
+          <span>{{ food.category }}</span>
+          <img class="burger-icon" [src]="getCategoryDetailIcon()" alt="icon">
+        </div>
+
+        <div class="qty-row">
+          <button class="circle-btn" type="button" (click)="decreaseQty()" [disabled]="quantity === 1">
+            <img src="assets/icons/subtract.svg" alt="">
+          </button>
+          <span class="qty-value">{{ quantity }}</span>
+          <button class="circle-btn" type="button" (click)="increaseQty()">
+            <img src="assets/icons/add.svg" alt="">
+          </button>
+        </div>
+        <!-- 升級套餐 -->
+        @if (!isCategory(EnumFoodCategory.Drink) && !isCategory(EnumFoodCategory.Fries)) {
+          <div class="section-block">
+            <div class="section-title">
+              <img src="assets/icons/meal.svg" alt="">
+              升級套餐優惠
+            </div>
+            <div class="option-list">
+              @for (item of setOptions; track $index) {
+                <div
+                  class="option-card set-card"
+                  [class.active]="selectedSet === item.name"
+                  (click)="selectSet(item.name)">
+
+                  <div class="option-left">
+                    <div class="check-ui">
+                      @if (selectedSet === item.name) {
+                        <img src="assets/icons/check.svg" alt="checked">
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                  <span class="option-price">+ ${{ item.price }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- 套餐飲料 -->
+        @if (!isCategory(EnumFoodCategory.Drink) && !isCategory(EnumFoodCategory.Fries) && showDrinkSection) {
+          <div class="section-block gray-block">
+            <div class="section-title">
+              <img src="assets/icons/drink-category.svg" alt="">
+              套餐飲料
+            </div>
+            <div class="option-list white-inner">
+              @for (item of drinkOptions; track $index) {
+                <div
+                  class="option-card drink-card"
+                  [class.active]="selectedDrink === item.name"
+                  (click)="selectDrink(item.name)">
+
+                  <div class="option-left">
+                    <div class="radio-ui">
+                      @if (selectedDrink === item.name) {
+                        <div class="radio-dot"></div>
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- 漢堡客製化 -->
+        @if (isCategory(EnumFoodCategory.Burger)) {
+          <div class="section-block">
+            <div class="section-title">
+              <img src="assets/icons/customer.svg" alt="">
+              客製化餐點
+            </div>
+            <div class="option-list bordered-box">
+              @for (item of customOptions; track $index) {
+                <div class="option-card custom-card" (click)="toggleCustomOption(item.name)">
+                  <div class="option-left">
+                    <div class="check-ui" [class.active]="isCustomOptionSelected(item.name)">
+                      @if (isCustomOptionSelected(item.name)) {
+                        <img src="assets/icons/check.svg" alt="checked">
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                  @if (item.price > 0) {
+                    <span class="option-price">+ ${{ item.price }}</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- 披薩餅皮 -->
+        @if (isCategory(EnumFoodCategory.Pizza)) {
+          <div class="section-block" #pizzaSection
+              [class.error]="showValidationError && isCategory(EnumFoodCategory.Pizza) && !selectedCrust">
+            <div class="section-title">
+              <img src="assets/icons/pizza-category.svg" alt="">
+              餅皮選擇
+              <small class="required">* 請選擇餅皮</small>
+            </div>
+
+            <div class="option-list bordered-box">
+              @for (item of crustOptions; track $index) {
+                <div
+                  class="option-card"
+                  [class.active]="selectedCrust === item.name"
+                  (click)="selectCrust(item.name)">
+
+                  <div class="option-left">
+                    <div class="radio-ui">
+                      @if (selectedCrust === item.name) {
+                        <div class="radio-dot"></div>
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                  @if (item.price > 0) {
+                    <span class="option-price">+ ${{ item.price }}</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- 沙拉選擇醬料和加購主食及蔬菜 -->
+        @if (isCategory(EnumFoodCategory.Salad)) {
+          <div class="section-block" #saladSection
+              [class.error]="showValidationError && isCategory(EnumFoodCategory.Salad) && !selectedSaladSauce">
+            <div class="section-title">
+              <img src="assets/icons/sauce.svg" alt="">
+              選擇醬料
+              <small class="required">* 請選擇醬料</small>
+            </div>
+
+            <div class="option-list bordered-box">
+              @for (item of saladSauceOptions; track $index) {
+                <div
+                  class="option-card"
+                  [class.active]="selectedSaladSauce === item.name"
+                  (click)="selectSaladSauce(item.name)">
+
+                  <div class="option-left">
+                    <div class="radio-ui">
+                      @if (selectedSaladSauce === item.name) {
+                        <div class="radio-dot"></div>
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="section-block">
+            <div class="section-title">
+              <img src="assets/icons/meat.svg" alt="">
+              加購主食
+            </div>
+
+            <div class="option-list bordered-box">
+              @for (item of saladProteinOptions; track $index) {
+                <div class="option-card" (click)="toggleSaladProtein(item.name)">
+                  <div class="option-left">
+                    <div class="check-ui" [class.active]="selectedSaladProteins.includes(item.name)">
+                      @if (selectedSaladProteins.includes(item.name)) {
+                        <img src="assets/icons/check.svg" alt="checked">
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                  <span class="option-price">+ ${{ item.price }}</span>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="section-block">
+            <div class="section-title">
+              <img src="assets/icons/vegetable.svg" alt="">
+              加購蔬菜
+            </div>
+
+            <div class="option-list bordered-box">
+              @for (item of saladVeggieOptions; track $index) {
+                <div class="option-card" (click)="toggleSaladVeggie(item.name)">
+                  <div class="option-left">
+                    <div class="check-ui" [class.active]="selectedSaladVeggies.includes(item.name)">
+                      @if (selectedSaladVeggies.includes(item.name)) {
+                        <img src="assets/icons/check.svg" alt="checked">
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                  <span class="option-price">+ ${{ item.price }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- 炸物醬料和加購飲料 -->
+        @if (isCategory(EnumFoodCategory.Fries)) {
+          <div class="section-block">
+            <div class="section-title">
+              <img src="assets/icons/fries-category.svg" alt="">
+              醬料選擇
+            </div>
+
+            <div class="option-list bordered-box">
+              <div class="option-card" (click)="toggleKetchup()">
+                <div class="option-left">
+                  <div class="check-ui" [class.active]="needKetchup">
+                    @if (needKetchup) {
+                      <img src="assets/icons/check.svg" alt="checked">
+                    }
+                  </div>
+                  <span>需要番茄醬</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-title">
+              <img src="assets/icons/drink-category.svg" alt="">
+              加購飲料
+            </div>
+
+            <div class="option-list bordered-box">
+              @for (item of drinkOptions; track $index) {
+                <div
+                  class="option-card drink-card"
+                  [class.active]="selectedDrink === item.name"
+                  (click)="selectDrink(item.name)">
+
+                  <div class="option-left">
+                    <div class="radio-ui">
+                      @if (selectedDrink === item.name) {
+                        <div class="radio-dot"></div>
+                      }
+                    </div>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                  <span class="option-price">+ $25</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="total-price">${{ totalPrice }}</div>
+      <button class="add-cart-btn" type="button" (click)="onAddCart()">
+        加入購物車
+        <img src="assets/icons/add.svg" alt="">
+      </button>
+    </div>
+  </div>
+</div>
+

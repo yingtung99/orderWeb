@@ -1,0 +1,64 @@
+<div class="sidebar d-none d-md-flex">
+  <div class="sidebar-content">
+    <div class="logo">
+      <span class="title-light">Maisy’</span>Meal<span class="dot">.</span>
+    </div>
+    <ul class="nav menu-list">
+      <li class="nav-item">
+        <a class="nav-link"
+          routerLink="/menu"
+          routerLinkActive="active">
+          <img class="icon default" src="assets/icons/menu.svg" alt="">
+          <img class="icon active-icon"src="assets/icons/menu-active.svg" alt="">
+          菜單
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link"
+          routerLink="/record"
+          routerLinkActive="active">
+          <img class="icon default" src="assets/icons/record.svg" alt="">
+          <img class="icon active-icon" src="assets/icons/record-active.svg" alt="">
+          訂餐紀錄
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- 手機版選單 -->
+<div class="offcanvas offcanvas-top" tabindex="-1" id="mobileSidebar">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    <h5 class="logo mb-0">
+      <span class="title-light">Maisy’</span>Meal<span class="dot">.</span>
+    </h5>
+  </div>
+
+  <div class="offcanvas-body">
+    <ul class="nav menu-list">
+      <li class="nav-item">
+        <a class="nav-link"
+          routerLink="/menu"
+          routerLinkActive="active"
+          data-bs-dismiss="offcanvas">
+          <img class="icon default" src="assets/icons/menu.svg" alt="">
+          <img class="icon active-icon"src="assets/icons/menu-active.svg" alt="">
+          菜單
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link"
+          routerLink="/record"
+          routerLinkActive="active"
+          data-bs-dismiss="offcanvas">
+          <img class="icon default" src="assets/icons/record.svg" alt="">
+          <img class="icon active-icon" src="assets/icons/record-active.svg">
+          訂餐紀錄
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

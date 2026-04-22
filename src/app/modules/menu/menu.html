@@ -1,0 +1,73 @@
+<div class="menu-page">
+    <div class="menu-header">
+        <h2 class="menu-title">菜單</h2>
+        <input type="text" class="search-input" 
+            placeholder="Search" [(ngModel)]="searchKeyword">
+    </div>
+
+    <div class="category-list row g-3">
+        @for (item of categoryList; track $index) {
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="category-card"
+                [class.active]="selectedCategory === item.category"
+                (click)="onClickCategory(item.category)">
+                <img [src]="selectedCategory === item.category ? item.icon_active : item.icon" alt="">
+                <div class="category-name">{{ item.name }}</div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="menu-content">
+        <div class="menu-section">
+            <h5 class="section-title">熱銷推薦</h5>
+            <div class="row g-3">
+                @for (item of popularList; track $index) {
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="food-card horizontal-card" (click)="openDetail(item)">
+                            <img [src]="item.image" [alt]="item.name">
+                            <div class="food-info">
+                                <h6 class="food-name">{{ item.name }}</h6>
+                                <h6 class="price">${{ item.price }}</h6>
+                                <div class="food-meta"> 
+                                    <small class="food-rating">
+                                        <img class="star" src="assets/icons/star.svg" alt="">
+                                        {{ item.star }}<span class="dot">·</span>{{item.category}}
+                                        <img class="category" [src]="item.category_icon" alt="">
+                                    </small>
+                                    <button class="add-btn" type="button" (click)="openDetail(item)">
+                                        <img class="icon" src="assets/icons/add.svg" alt="">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="menu-section">
+            <h5 class="section-title">餐點</h5>
+            <div class="row g-3">
+                @for (item of filteredFoodList; track $index) {
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="food-card vertical-card" (click)="openDetail(item)">
+                            <img [src]="item.image" [alt]="item.name">
+                            <h6 class="food-name">{{ item.name }}</h6>
+
+                            <div class="food-meta gap-2">
+                                <div class="price">${{ item.price }}</div>
+                                <button class="add-btn" type="button" (click)="openDetail(item)">
+                                    <img class="icon" src="assets/icons/add.svg" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (selectedFood) {
+    <app-food-detail-modal [food]="selectedFood" (close)="closeDetail()"></app-food-detail-modal>
+}
