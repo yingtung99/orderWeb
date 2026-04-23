@@ -7,6 +7,11 @@
     align-items: center;
     padding: 1rem;
     z-index: 999;
+    animation: modalFadeIn 0.4s ease;
+
+    &.closing {
+        animation: fadeOut 0.4s ease forwards;
+    }
 }
 
 .modal-card {
@@ -17,8 +22,13 @@
     max-height: 90vh;
     border-radius: 24px;
     overflow: hidden;
-    background: #f4f4f4;
+    background: var(--bg-white);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    animation: modalCardIn 0.4s ease;
+
+    &.closing {
+        animation: slideOut 0.4s ease forwards;
+    }
 }
 
 .close-btn {
@@ -111,7 +121,7 @@
     }
 
     .dot {
-        color: #b6b6b6;
+        color: var(--text-dot);
     }
 }
 
@@ -144,7 +154,7 @@
         }
 
         &:disabled {
-            background: var(--primary-disable);
+            background: var(--primary-disabled);
             cursor: not-allowed;
         }
 
@@ -184,6 +194,12 @@
         gap: 0.5rem;
     }
 
+    .option-list.error {
+        border: 2px solid var(--required-color);
+        border-radius: 16px;
+        padding: 0.75rem;
+    }
+
     .white-inner {
         background: #fff;
         border-radius: 14px;
@@ -192,7 +208,7 @@
 
     .bordered-box {
         background: #fafafa;
-        border: 1px solid #dddddd;
+        border: 1px solid var(--border-gray);
         border-radius: 16px;
         padding: 0.875rem;
     }
@@ -214,12 +230,12 @@
     }
 
     .set-card {
-        background: #efefef;
+        background: var(--card-gray);
         border-radius: 14px;
         padding: 0.75rem 0.875rem;
 
         &.active {
-            background: #f6e7c3;
+            background: var(--card-active);
 
             .check-ui {
                 background: var(--view-color);
@@ -229,14 +245,8 @@
     }
 }
 
-.section-block.error {
-  border: 1.5px solid #e84a47;
-  border-radius: 16px;
-  padding: 0.75rem;
-}
-
 .gray-block {
-    background: #dddddd;
+    background: var(--border-gray);
     border-radius: 16px;
     padding: 0.875rem;
 }
@@ -296,13 +306,15 @@
     padding: 0.75rem 1rem 1rem;
     box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.06);
     z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 
     .total-price {
         text-align: center;
         font-size: 2rem;
-        font-weight: 800;
-        color: #2f2f2f;
-        margin-bottom: 0.5rem;
+        font-weight: bold;
     }
 
     .add-cart-btn {
@@ -310,7 +322,7 @@
         height: 2.5rem;
         border: none;
         border-radius: 50px;
-        background: #efb237;
+        background: var(--primary-color);
         color: #fff;
         font-size: 1rem;
         font-weight: 700;
@@ -328,6 +340,42 @@
             background-color: var(--primary-hover);
         }
     }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.97);
+  }
 }
 
 

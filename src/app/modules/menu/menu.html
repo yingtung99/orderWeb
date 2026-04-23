@@ -69,5 +69,11 @@
 </div>
 
 @if (selectedFood) {
-    <app-food-detail-modal [food]="selectedFood" (close)="closeDetail()"></app-food-detail-modal>
+  <app-food-detail-modal
+    [food]="selectedFood"
+    [editingItem]="editingCartItem"
+    (close)="closeDetail()"
+    (addCart)="onAddCart($event)"
+    (updateCart)="onUpdateCart($event)">
+  </app-food-detail-modal>
 }

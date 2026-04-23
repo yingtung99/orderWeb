@@ -8,6 +8,7 @@ export interface CategoryItem {
 }
 
 export interface FoodItem {
+  id: number;
   name: string;
   price: number;
   category: FoodCategory;

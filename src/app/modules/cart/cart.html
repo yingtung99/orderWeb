@@ -1,1 +1,109 @@
-<p>cart works!</p>
+@if (isOpen) {
+  <div class="cart-overlay" [class.closing]="isClosing" (click)="closeCart()">
+    <aside class="cart-sidebar" [class.closing]="isClosing" (click)="$event.stopPropagation()">
+      <div class="cart-header">
+        <button class="back-btn" type="button" (click)="closeCart()">
+          <img src="assets/icons/arrow-left.svg" alt="back">
+        </button>
+        <span class="cart-title">購物車列表</span>
+      </div>
+
+      <div class="cart-body">
+        @if (cartItems.length > 0) {
+          <div class="cart-list">
+            @for (item of cartItems; track item.cartItemId) {
+              <div class="cart-card" [class.removing]="isRemoving(item.cartItemId)">
+                <div class="cart-card-top">
+                  <img class="food-img" [src]="item.image" [alt]="item.name">
+                  <div class="item-content">
+                    <div class="item-head">
+                      <div class="item-title-block">
+                        <span class="item-name">{{ item.name }}</span>
+
+                        @if (item.summary) {
+                          <span class="item-summary">{{ item.summary }}</span>
+                        }
+                      </div>
+
+                      <button class="edit-btn" type="button" (click)="onEdit(item)">
+                        修改
+                        <img src="assets/icons/edit.svg" alt="edit">
+                      </button>
+
+                      <button class="remove-btn" type="button" (click)="onRemove(item)">
+                        <img class="icon default" src="assets/icons/close-card.svg" alt="remove">
+                        <img class="icon hover" src="assets/icons/close.svg" alt="remove">
+                      </button>
+                    </div>
+
+                    <div class="item-bottom">
+                      <div class="qty-control">
+                        <button type="button" class="qty-btn light" (click)="onDecrease(item)"
+                                [disabled]="item.quantity === 1">
+                          <img src="assets/icons/subtract.svg" alt="minus">
+                        </button>
+
+                        <span class="qty-text">{{ item.quantity }}</span>
+
+                        <button type="button" class="qty-btn" (click)="onIncrease(item)">
+                          <img src="assets/icons/add.svg" alt="plus">
+                        </button>
+                      </div>
+
+                      <div class="item-price">${{ item.price * item.quantity }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                @if (hasOptionGroups(item)) {
+                  <button
+                    class="detail-toggle"
+                    type="button"
+                    [class.expanded]="isExpanded(item.id)"
+                    (click)="toggleDetails(item.id)">
+                    <span>詳細資訊</span>
+                    <img src="assets/icons/arrow-down.svg" alt="toggle">
+                  </button>
+
+                  @if (isExpanded(item.id)) {
+                    <div class="divider"></div>
+                    <div class="option-area">
+                      @for (group of item.optionGroups; track $index) {
+                        <div class="option-group">
+                          <span class="option-group-name">• {{ group.title }}</span>
+                          <span class="option-group-items">
+                            {{ group.items.join('、') }}
+                          </span>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <span>目前購物車沒有餐點</span>
+          </div>
+        }
+      </div>
+
+      <div class="cart-footer">
+        <div class="footer-divider"></div>
+        <div class="footer-actions">
+          <div class="total-block">
+            <div class="total-label">總金額</div>
+            <div class="total-price">$ {{ totalPrice }}</div>
+          </div>
+
+          <button class="confirm-btn" type="button"
+            [disabled]="cartItems.length === 0" (click)="onCheckout()">
+            確認送出
+            <img src="assets/icons/confirm.svg" alt="confirm">
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+}

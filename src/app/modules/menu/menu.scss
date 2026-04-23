@@ -151,13 +151,32 @@
                     }
 
                     .dot {
-                        color: #b6b6b6;
+                        color: var(--text-dot);
                         flex-shrink: 0;
                     }
                 }
 
                 .add-btn {
-                    flex-shrink: 0;
+                    background: var(--primary-color) ;
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 0.35rem;
+                    font-weight: 500;
+                    font-size: 0.875rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+
+                    .icon{
+                        width: 0.875rem !important;
+                        height: 0.875rem !important;
+                    }
+
+                    &:hover {
+                        background: var(--primary-hover);
+                        color: #fff;
+                    }
                 }
             }
 

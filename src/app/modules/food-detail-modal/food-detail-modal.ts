@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FoodItem, SetOption } from '../../models/Food';
 import { FoodCategory } from '../../models/Enum';
+import { CartItem, CartItemOptionGroup } from '../../models/CartItem';
 
 @Component({
   selector: 'app-food-detail-modal',
@@ -10,14 +11,19 @@ import { FoodCategory } from '../../models/Enum';
 })
 export class FoodDetailModal {
   @Input() food!: FoodItem; // 目前選取的餐點資料
+  @Input() editingItem: CartItem | null = null; // 目前正在編輯的購物車項目（null 代表新增模式）
   @Output() close = new EventEmitter<void>(); // 關閉 modal 事件
+  @Output() addCart = new EventEmitter<CartItem>(); // 新增購物車事件
+  @Output() updateCart = new EventEmitter<CartItem>(); // 更新購物車事件（編輯模式用）
+  
 
   @ViewChild('pizzaSection') pizzaSection!: ElementRef;
   @ViewChild('saladSection') saladSection!: ElementRef;
+  @ViewChild('setDrinkSection') setDrinkSection?: ElementRef<HTMLDivElement>;
 
   protected readonly EnumFoodCategory = FoodCategory; // 類別Enum
   protected showValidationError = false; // 是否顯示驗證錯誤
-
+  protected isClosing = false; // modal開啟
   protected quantity = 1; // 餐點數量
   protected needKetchup = false; // 是否需要番茄醬
   protected selectedSet: string | null = null; // 已選套餐
@@ -82,6 +88,66 @@ export class FoodDetailModal {
     { name: '地瓜泥', price: 15 },
     { name: '堅果麥片', price: 15 },
   ];
+
+  ngOnChanges(): void {
+    if (!this.editingItem) return;
+
+    this.quantity = this.editingItem.quantity;
+
+    this.selectedSet = null;
+    this.selectedDrink = null;
+    this.selectedCustomOptions = [];
+    this.selectedCrust = null;
+    this.selectedSaladSauce = null;
+    this.selectedSaladProteins = [];
+    this.selectedSaladVeggies = [];
+    this.needKetchup = false;
+
+    for (const group of this.editingItem.optionGroups ?? []) {
+      if (group.title === '套餐升級') {
+        this.selectedSet = group.items[0] ?? null;
+        this.selectedDrink = group.items[1] ?? null;
+      }
+
+      if (group.title === '客製化餐點') {
+        this.selectedCustomOptions = [...group.items];
+      }
+
+      if (group.title === '餅皮選擇') {
+        this.selectedCrust = group.items[0] ?? null;
+      }
+
+      if (group.title === '醬料選擇' && this.isCategory(FoodCategory.Salad)) {
+        this.selectedSaladSauce = group.items[0] ?? null;
+      }
+
+      if (group.title === '加購主食') {
+        this.selectedSaladProteins = [...group.items];
+      }
+
+      if (group.title === '加購蔬菜') {
+        this.selectedSaladVeggies = [...group.items];
+      }
+
+      if (group.title === '醬料選擇' && this.isCategory(FoodCategory.Fries)) {
+        this.needKetchup = group.items.includes('需要番茄醬');
+      }
+
+      if (group.title === '加購飲料') {
+        this.selectedDrink = group.items[0] ?? null;
+      }
+    }
+  }
+
+  /** 關閉 modal（帶動畫） */
+  protected closeModal(): void {
+    this.isClosing = true;
+
+    setTimeout(() => {
+      this.close.emit();
+      this.isClosing = false;
+    }, 400);
+  }
 
   /** 判斷目前餐點是否為指定類別 */
   protected isCategory(category: FoodCategory): boolean {
@@ -156,6 +222,11 @@ export class FoodDetailModal {
 
     // 沙拉 → 必選醬料
     if (this.isCategory(FoodCategory.Salad) && !this.selectedSaladSauce) {
+      return false;
+    }
+
+    // 有選套餐 → 套餐飲料必選
+    if (this.selectedSet && !this.selectedDrink) {
       return false;
     }
 
@@ -285,20 +356,120 @@ export class FoodDetailModal {
         block: 'center',
       });
     }
+
+    // 套餐：未選飲料
+    if (this.selectedSet && !this.selectedDrink) {
+      this.setDrinkSection?.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
   }
 
-  /** 點擊加入購物車：先進行必選驗證，未通過則顯示錯誤並捲動到對應區塊 */
+  /** 新增或更新購物車項目 */
   protected onAddCart(): void {
-    // 開啟驗證狀態（顯示紅框 / 錯誤訊息）
     this.showValidationError = true;
 
-    // 未通過驗證 → 捲動到錯誤位置並中止流程
     if (!this.isValidSelection) {
       this.scrollToError();
       return;
     }
 
-    // 通過驗證 → 執行加入購物車邏輯
-    console.log('加入購物車');
+    const optionGroups: { title: string; items: string[] }[] = [];
+
+    if (this.selectedSet) {
+      const setItems = [this.selectedSet];
+      if (this.selectedDrink) {
+        setItems.push(this.selectedDrink);
+      }
+
+      optionGroups.push({
+        title: '套餐升級',
+        items: setItems,
+      });
+    }
+
+    if (this.isCategory(FoodCategory.Burger) && this.selectedCustomOptions.length) {
+      optionGroups.push({
+        title: '客製化餐點',
+        items: this.selectedCustomOptions,
+      });
+    }
+
+    if (this.isCategory(FoodCategory.Pizza) && this.selectedCrust) {
+      optionGroups.push({
+        title: '餅皮選擇',
+        items: [this.selectedCrust],
+      });
+    }
+
+    if (this.isCategory(FoodCategory.Salad)) {
+      if (this.selectedSaladSauce) {
+        optionGroups.push({
+          title: '醬料選擇',
+          items: [this.selectedSaladSauce],
+        });
+      }
+
+      if (this.selectedSaladProteins.length) {
+        optionGroups.push({
+          title: '加購主食',
+          items: this.selectedSaladProteins,
+        });
+      }
+
+      if (this.selectedSaladVeggies.length) {
+        optionGroups.push({
+          title: '加購蔬菜',
+          items: this.selectedSaladVeggies,
+        });
+      }
+    }
+
+    if (this.isCategory(FoodCategory.Fries)) {
+      if (this.needKetchup) {
+        optionGroups.push({
+          title: '醬料選擇',
+          items: ['需要番茄醬'],
+        });
+      }
+
+      if (this.selectedDrink) {
+        optionGroups.push({
+          title: '加購飲料',
+          items: [this.selectedDrink],
+        });
+      }
+    }
+
+    const cartItem: CartItem = {
+      cartItemId: this.editingItem ? this.editingItem.cartItemId : Date.now(),
+      id: this.food.id,
+      name: this.food.name,
+      image: this.food.image,
+      price: this.totalPrice,
+      quantity: this.quantity,
+      summary: this.getSummaryText(),
+      optionGroups,
+    };
+
+    if (this.editingItem) {
+      this.updateCart.emit(cartItem);
+    } else {
+      this.addCart.emit(cartItem);
+    }
+  }
+
+  /** 取得購物車卡片摘要文字 */
+  protected getSummaryText(): string {
+    // 醬料
+    if (this.isCategory(FoodCategory.Salad)) {
+      return this.selectedSaladSauce ?? '';
+    }
+    // 餅皮
+    if (this.isCategory(FoodCategory.Pizza)) {
+      return this.selectedCrust ?? '';
+    }
+    return '';
   }
 }

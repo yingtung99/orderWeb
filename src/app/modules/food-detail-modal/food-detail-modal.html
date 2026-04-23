@@ -1,6 +1,6 @@
-<div class="modal-food-detail" (click)="close.emit()">
-  <div class="modal-card" (click)="$event.stopPropagation()">
-    <button class="close-btn" type="button" (click)="close.emit()">
+<div class="modal-food-detail" [class.closing]="isClosing" (click)="closeModal()">
+  <div class="modal-card" [class.closing]="isClosing" (click)="$event.stopPropagation()">
+    <button class="close-btn" type="button" (click)="closeModal()">
       <img src="assets/icons/close.svg" alt="close">
     </button>
     <div class="modal-scroll">
@@ -63,12 +63,16 @@
 
         <!-- 套餐飲料 -->
         @if (!isCategory(EnumFoodCategory.Drink) && !isCategory(EnumFoodCategory.Fries) && showDrinkSection) {
-          <div class="section-block gray-block">
+          <div class="section-block gray-block" #setDrinkSection>
             <div class="section-title">
               <img src="assets/icons/drink-category.svg" alt="">
               套餐飲料
+              @if (selectedSet) {
+                <small class="required">* 必選</small>
+              }
             </div>
-            <div class="option-list white-inner">
+            <div class="option-list white-inner"
+                [class.error]="showValidationError && selectedSet && !selectedDrink">
               @for (item of drinkOptions; track $index) {
                 <div
                   class="option-card drink-card"
@@ -119,15 +123,15 @@
 
         <!-- 披薩餅皮 -->
         @if (isCategory(EnumFoodCategory.Pizza)) {
-          <div class="section-block" #pizzaSection
-              [class.error]="showValidationError && isCategory(EnumFoodCategory.Pizza) && !selectedCrust">
+          <div class="section-block" #pizzaSection>
             <div class="section-title">
               <img src="assets/icons/pizza-category.svg" alt="">
               餅皮選擇
-              <small class="required">* 請選擇餅皮</small>
+              <small class="required">* 必選</small>
             </div>
 
-            <div class="option-list bordered-box">
+            <div class="option-list bordered-box"
+                [class.error]="showValidationError && isCategory(EnumFoodCategory.Pizza) && !selectedCrust">
               @for (item of crustOptions; track $index) {
                 <div
                   class="option-card"
@@ -154,15 +158,15 @@
 
         <!-- 沙拉選擇醬料和加購主食及蔬菜 -->
         @if (isCategory(EnumFoodCategory.Salad)) {
-          <div class="section-block" #saladSection
-              [class.error]="showValidationError && isCategory(EnumFoodCategory.Salad) && !selectedSaladSauce">
+          <div class="section-block" #saladSection>
             <div class="section-title">
               <img src="assets/icons/sauce.svg" alt="">
               選擇醬料
-              <small class="required">* 請選擇醬料</small>
+              <small class="required">* 必選</small>
             </div>
 
-            <div class="option-list bordered-box">
+            <div class="option-list bordered-box"
+                [class.error]="showValidationError && isCategory(EnumFoodCategory.Salad) && !selectedSaladSauce">
               @for (item of saladSauceOptions; track $index) {
                 <div
                   class="option-card"
@@ -285,8 +289,12 @@
     <div class="bottom-bar">
       <div class="total-price">${{ totalPrice }}</div>
       <button class="add-cart-btn" type="button" (click)="onAddCart()">
-        加入購物車
-        <img src="assets/icons/add.svg" alt="">
+        {{ editingItem ? '修改餐點' : '加入購物車' }}
+        @if (editingItem) {
+          <img src="assets/icons/edit.svg" alt="edit">
+        } @else {
+          <img src="assets/icons/add.svg" alt="add">
+        }
       </button>
     </div>
   </div>
