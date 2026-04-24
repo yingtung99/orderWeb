@@ -63,7 +63,7 @@
                     <img src="assets/icons/arrow-down.svg" alt="toggle">
                   </button>
 
-                  @if (isExpanded(item.cartItemId)) {
+                  <div class="detail-wrapper" [class.expanded]="isExpanded(item.cartItemId)">
                     <div class="divider"></div>
                     <div class="option-area">
                       @for (group of item.optionGroups; track $index) {
@@ -75,7 +75,7 @@
                         </div>
                       }
                     </div>
-                  }
+                  </div>
                 }
               </div>
             }
