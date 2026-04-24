@@ -59,12 +59,54 @@ export class CartService {
 
   /** 購物車操作 */
   /** 新增餐點 */
-  addItem(item: CartItem): void {
-    this.setCartItems([...this.value, item]);
+  addItem(newItem: CartItem): void {
+    const matchedItem = this.value.find(item =>
+      this.isSameCartItem(item, newItem)
+    );
+
+    if (matchedItem) {
+      this.setCartItems(
+        this.value.map(item =>
+          item.cartItemId === matchedItem.cartItemId
+            ? {
+                ...item,
+                quantity: item.quantity + newItem.quantity,
+              }
+            : item
+        )
+      );
+
+      return;
+    }
+
+    this.setCartItems([...this.value, newItem]);
   }
 
   /** 更新單筆 */
   updateItem(updatedItem: CartItem): void {
+    const otherItems = this.value.filter(
+      item => item.cartItemId !== updatedItem.cartItemId
+    );
+
+    const matchedItem = otherItems.find(item =>
+      this.isSameCartItem(item, updatedItem)
+    );
+
+    if (matchedItem) {
+      this.setCartItems(
+        otherItems.map(item =>
+          item.cartItemId === matchedItem.cartItemId
+            ? {
+                ...item,
+                quantity: item.quantity + updatedItem.quantity,
+              }
+            : item
+        )
+      );
+
+      return;
+    }
+
     this.setCartItems(
       this.value.map(item =>
         item.cartItemId === updatedItem.cartItemId ? updatedItem : item
@@ -112,5 +154,26 @@ export class CartService {
 
   clearEditing(): void {
     this.editingItem.next(null);
+  }
+
+  /** 產生餐點內容比對用 key */
+  private getCartItemKey(item: CartItem): string {
+    const optionGroups = (item.optionGroups ?? []).map(group => ({
+      title: group.title,
+      items: [...group.items].sort(),
+    }));
+
+    optionGroups.sort((a, b) => a.title.localeCompare(b.title));
+
+    return JSON.stringify({
+      id: item.id,
+      summary: item.summary ?? '',
+      optionGroups,
+    });
+  }
+
+  /** 判斷兩筆餐點內容是否完全相同 */
+  private isSameCartItem(a: CartItem, b: CartItem): boolean {
+    return this.getCartItemKey(a) === this.getCartItemKey(b);
   }
 }
