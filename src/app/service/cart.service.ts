@@ -43,20 +43,22 @@ export class CartService {
   updateItem(updatedItem: CartItem): void {
     this.cartItems.next(
       this.value.map(item =>
-        item.id === updatedItem.id ? updatedItem : item
+        item.cartItemId === updatedItem.cartItemId ? updatedItem : item
       )
     );
   }
-
+  
   /** 移除 */
-  removeItem(id: number): void {
-    this.cartItems.next(this.value.filter(i => i.id !== id));
-  }
+  removeItem(cartItemId: number): void {
+    this.cartItems.next(
+      this.value.filter(item => item.cartItemId !== cartItemId)
+    );
+}
 
   /** 更新數量 */
-  updateQuantity(id: number, type: 'increase' | 'decrease'): void {
+  updateQuantity(cartItemId: number, type: 'increase' | 'decrease'): void {
     const updated = this.value.map(item => {
-      if (item.id !== id) return item;
+      if (item.cartItemId !== cartItemId) return item;
 
       const quantity =
         type === 'increase'

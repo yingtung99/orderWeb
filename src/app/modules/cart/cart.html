@@ -56,16 +56,14 @@
                 </div>
 
                 @if (hasOptionGroups(item)) {
-                  <button
-                    class="detail-toggle"
-                    type="button"
-                    [class.expanded]="isExpanded(item.id)"
-                    (click)="toggleDetails(item.id)">
+                  <button class="detail-toggle" type="button"
+                    [class.expanded]="isExpanded(item.cartItemId)"
+                    (click)="toggleDetails(item.cartItemId)">
                     <span>詳細資訊</span>
                     <img src="assets/icons/arrow-down.svg" alt="toggle">
                   </button>
 
-                  @if (isExpanded(item.id)) {
+                  @if (isExpanded(item.cartItemId)) {
                     <div class="divider"></div>
                     <div class="option-area">
                       @for (group of item.optionGroups; track $index) {
