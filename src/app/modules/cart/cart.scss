@@ -1,13 +1,14 @@
 .cart-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.25);
   z-index: 999;
   display: flex;
   justify-content: flex-end;
   animation: fadeIn 0.5s ease forwards;
 
   &.closing {
+    pointer-events: none;
     animation: fadeOut 0.5s ease forwards;
   }
 }
@@ -17,7 +18,7 @@
   height: 94vh;
   background: var(--bg-white);
   margin: 1.25rem;
-  border-radius: 2.5rem;
+  border-radius: 20px;
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
@@ -32,7 +33,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  padding: 1rem;
 
   .back-btn {
     width: 2rem;
@@ -78,10 +79,19 @@
 }
 
 .cart-card {
-  background: var(--card-color);
-  border-radius: 1.25rem;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   padding: 0.875rem;
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease,
+              border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
 
   .cart-card-top {
     display: flex;
@@ -106,7 +116,6 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 0.5rem;
 
         .item-title-block {
           display: flex;
@@ -271,7 +280,7 @@
 
   .divider {
     height: 1px;
-    background: var(--border-line);
+    background: var(--text-light);
     margin: 0.5rem 0 0.5rem 0;
   }
 
@@ -333,18 +342,20 @@
     }
 
     .confirm-btn {
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 0.9rem 0.55rem 1rem;
       border: none;
-      border-radius: 50px;
+      border-radius: 12px;
       background: var(--primary-color);
       color: #fff;
-      font-size: 1rem;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.875rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.4rem;
       cursor: pointer;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
       img {
         width: 1rem;
@@ -352,8 +363,11 @@
         object-fit: contain;
       }
 
-      &:hover{
+      &:hover {
         background: var(--primary-hover);
+        color: #fff;
+        transform: translateY(-0.5px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
       }
 
       &:disabled {
