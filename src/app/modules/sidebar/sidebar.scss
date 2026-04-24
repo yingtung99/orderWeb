@@ -76,16 +76,37 @@
 }
 
 .offcanvas.offcanvas-top {
-  height: 14rem;
+  height: 13rem;
   transition: transform 0.75s ease-in-out;
   
   .offcanvas-header{
     background-color: var(--bg-soft);
-    gap: 1.875rem;
+    gap: 1rem;
     padding: 1rem;
 
     .btn-close{
       margin-left: 0;
     }
+
+    .close-btn {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 12px;
+      border: none;
+      background: var(--remove-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
   } 
+
+  .offcanvas-body{
+    background-color: var(--bg-white);
+  }
 }
