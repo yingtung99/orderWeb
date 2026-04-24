@@ -17,26 +17,49 @@
         }
 
         .search-input {
-            width: auto;
+            width: 14rem;
             height: 2.75rem;
-            border-radius: 14px;
-            border: none;
-            box-shadow: 0 0 0 1px #eee;
-            padding-left: 1rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background: #fff;
+            padding: 0 1rem;
+            color: var(--text-dark);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            outline: none;
+            transition: border-color 0.2s ease,
+                        box-shadow 0.2s ease,
+                        background-color 0.2s ease;
+
+            &::placeholder {
+                color: var(--text-muted);
+            }
+
+            &:hover {
+                border-color: rgba(224, 169, 79, 0.45);
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+            }
+
+            &:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(224, 169, 79, 0.15),
+                            0 3px 8px rgba(0, 0, 0, 0.08);
+            }
         }
     }
 
     .category-list{
         .category-card {
             background: #fff;
-            border-radius: 18px;
-            padding: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            border: 1px solid transparent;
             height: 100%;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
 
             .category-name {
                 font-size: 1rem;
@@ -44,21 +67,24 @@
                 color: var(--text-dark);
             }
 
-            &:hover{
-                background-color: var(--card-hover);
+            &:hover {
+                border-color: var(--primary-color);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             }
 
-            &.active{
-                background-color: var(--primary-color);
+            &.active {
+                border-color: var(--primary-color);
+                background: rgba(224, 169, 79, 0.12);
+                box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 
                 .category-name {
-                    color: #fff;
+                    color: var(--primary-color);
                 }
             }
         }
     }
     
-
     .menu-content{
         display: flex;
         flex-direction: column;
@@ -75,22 +101,51 @@
                 font-weight: bold;
             }
 
+            .food-card-col {
+                animation: foodFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+            }
+
+            @keyframes foodFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(4px) scale(0.995);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+
             .food-card {
                 background: #fff;
-                border-radius: 20px;
+                border-radius: 12px;
                 padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+                border: 1px solid transparent;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
                 height: 100%;
                 cursor: pointer;
+                transition: all 0.2s ease;
 
                 img {
                     max-width: 100%;
                     height: auto;
                     object-fit: contain;
+                    transition: transform 0.2s ease;
                 }
 
-                &:hover{
-                    background-color: var(--card-hover);
+                &:hover {
+                    border-color: var(--primary-color);
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+                    img {
+                        transform: scale(1.02);
+                    }
+
+                    .add-btn {
+                        transform: scale(1.03);
+                    }                    
                 }
 
                 .food-info {
@@ -157,25 +212,25 @@
                 }
 
                 .add-btn {
-                    background: var(--primary-color) ;
+                    background: var(--primary-color);
                     color: #fff;
                     border: none;
                     border-radius: 8px;
                     padding: 0.35rem;
-                    font-weight: 500;
-                    font-size: 0.875rem;
                     display: flex;
                     align-items: center;
                     gap: 0.25rem;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+                    transition: transform 0.2s ease, background-color 0.2s ease;
 
-                    .icon{
+                    .icon {
                         width: 0.875rem !important;
                         height: 0.875rem !important;
                     }
 
                     &:hover {
                         background: var(--primary-hover);
-                        color: #fff;
+                        transform: scale(1.05);
                     }
                 }
             }
@@ -207,8 +262,6 @@
                     margin: 0 auto;
                 }
             }
-
-            
         }
     }
 }

@@ -8,7 +8,8 @@ import { CartService } from '../../service/cart.service';
   styleUrl: './topbar.scss',
 })
 export class Topbar {
-  cartCount = 0; // 購物車總數量
+  protected cartCount = 0; // 購物車總數量
+  protected badgeBump = false;
 
   constructor(private cartService: CartService) {}
 

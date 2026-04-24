@@ -22,19 +22,19 @@ export class Menu {
 
   // 商品類別列表
   protected categoryList: CategoryItem[] = [
-    { name: '漢堡', category: FoodCategory.Burger, icon: 'assets/icons/burger.svg', icon_active: 'assets/icons/burger-active.svg' },
-    { name: '炸雞', category: FoodCategory.Chicken, icon: 'assets/icons/chicken.svg', icon_active: 'assets/icons/chicken-active.svg' },
-    { name: '炸物', category: FoodCategory.Fries, icon: 'assets/icons/fries.svg', icon_active: 'assets/icons/fries-active.svg' },
-    { name: '披薩', category: FoodCategory.Pizza, icon: 'assets/icons/pizza.svg', icon_active: 'assets/icons/pizza-active.svg' },
-    { name: '沙拉', category: FoodCategory.Salad, icon: 'assets/icons/salad.svg', icon_active: 'assets/icons/salad-active.svg' },
-    { name: '飲料', category: FoodCategory.Drink, icon: 'assets/icons/drink.svg', icon_active: 'assets/icons/drink-active.svg' },
+    { name: '漢堡', category: FoodCategory.Burger, icon: 'assets/icons/burger.svg' },
+    { name: '炸雞', category: FoodCategory.Chicken, icon: 'assets/icons/chicken.svg' },
+    { name: '炸物', category: FoodCategory.Fries, icon: 'assets/icons/fries.svg' },
+    { name: '披薩', category: FoodCategory.Pizza, icon: 'assets/icons/pizza.svg' },
+    { name: '沙拉', category: FoodCategory.Salad, icon: 'assets/icons/salad.svg' },
+    { name: '飲料', category: FoodCategory.Drink, icon: 'assets/icons/drink.svg' },
   ];
 
   // 熱銷餐點列表
   protected popularList: FoodItem[] = [
-    { id: 1, name: '雙層牛肉起司堡', price: 150, star: 4.9, category: FoodCategory.Burger, image: 'assets/images/double-beef-burger.png', category_icon: 'assets/icons/burger-category.svg' },
-    { id: 2, name: '美式臘腸披薩', price: 220, star: 4.8, category: FoodCategory.Pizza, image: 'assets/images/american-sausage-pizza.png', category_icon: 'assets/icons/pizza-category.svg' },
-    { id: 3, name: '香草雞肉沙拉', price: 130, star: 4.6, category: FoodCategory.Salad, image: 'assets/images/chicken-salad.png', category_icon: 'assets/icons/salad-category.svg' }
+    { id: 1, name: '雙層牛肉起司堡', price: 150, star: 4.9, category: FoodCategory.Burger, image: 'assets/images/double-beef-burger.png', category_icon: 'assets/icons/burger.svg' },
+    { id: 2, name: '美式臘腸披薩', price: 220, star: 4.8, category: FoodCategory.Pizza, image: 'assets/images/american-sausage-pizza.png', category_icon: 'assets/icons/pizza.svg' },
+    { id: 3, name: '香草雞肉沙拉', price: 130, star: 4.6, category: FoodCategory.Salad, image: 'assets/images/chicken-salad.png', category_icon: 'assets/icons/salad.svg' }
   ];
 
   // 餐點列表

@@ -4,7 +4,6 @@ export interface CategoryItem {
   name: string;
   category: FoodCategory;
   icon: string;
-  icon_active: string;
 }
 
 export interface FoodItem {

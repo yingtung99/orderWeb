@@ -11,7 +11,7 @@
             <div class="category-card"
                 [class.active]="selectedCategory === item.category"
                 (click)="onClickCategory(item.category)">
-                <img [src]="selectedCategory === item.category ? item.icon_active : item.icon" alt="">
+                <img [src]="item.icon" alt="">
                 <div class="category-name">{{ item.name }}</div>
             </div>
         </div>
@@ -48,8 +48,8 @@
         <div class="menu-section">
             <h5 class="section-title">餐點</h5>
             <div class="row g-3">
-                @for (item of filteredFoodList; track $index) {
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                @for (item of filteredFoodList; track item.id) {
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-2 food-card-col">
                         <div class="food-card vertical-card" (click)="openDetail(item)">
                             <img [src]="item.image" [alt]="item.name">
                             <h6 class="food-name">{{ item.name }}</h6>

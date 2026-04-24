@@ -232,17 +232,6 @@ export class FoodDetailModal {
 
     return true;
   }
-  
-  /** 取得分類圖示（統一轉為 *-category.svg，若已是則直接使用） */
-  protected getCategoryDetailIcon(): string {
-    const icon = this.food?.category_icon ?? '';
-
-    if (!icon) return '';
-
-    return icon.includes('-category.svg')
-      ? icon
-      : icon.replace('.svg', '-category.svg');
-  }
 
   /** 減少餐點數量（最少為 1） */
   protected decreaseQty(): void {

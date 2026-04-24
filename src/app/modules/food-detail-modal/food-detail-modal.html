@@ -19,7 +19,7 @@
             <span class="dot">·</span>
           }
           <span>{{ food.category }}</span>
-          <img class="burger-icon" [src]="getCategoryDetailIcon()" alt="icon">
+          <img class="burger-icon" [src]="food.category_icon" alt="icon">
         </div>
 
         <div class="qty-row">
@@ -65,7 +65,7 @@
         @if (!isCategory(EnumFoodCategory.Drink) && !isCategory(EnumFoodCategory.Fries) && showDrinkSection) {
           <div class="section-block gray-block" #setDrinkSection>
             <div class="section-title">
-              <img src="assets/icons/drink-category.svg" alt="">
+              <img src="assets/icons/drink.svg" alt="">
               套餐飲料
               @if (selectedSet) {
                 <small class="required">* 必選</small>
@@ -125,7 +125,7 @@
         @if (isCategory(EnumFoodCategory.Pizza)) {
           <div class="section-block" #pizzaSection>
             <div class="section-title">
-              <img src="assets/icons/pizza-category.svg" alt="">
+              <img src="assets/icons/pizza.svg" alt="">
               餅皮選擇
               <small class="required">* 必選</small>
             </div>
@@ -237,7 +237,7 @@
         @if (isCategory(EnumFoodCategory.Fries)) {
           <div class="section-block">
             <div class="section-title">
-              <img src="assets/icons/fries-category.svg" alt="">
+              <img src="assets/icons/fries.svg" alt="">
               醬料選擇
             </div>
 
@@ -257,7 +257,7 @@
 
           <div class="section-block">
             <div class="section-title">
-              <img src="assets/icons/drink-category.svg" alt="">
+              <img src="assets/icons/drink.svg" alt="">
               加購飲料
             </div>
 
