@@ -7,15 +7,17 @@ import { CartItem } from '../models/CartItem';
 })
 export class CartService {
 
-  /** 購物車資料 */
-  private cartItems = new BehaviorSubject<CartItem[]>([]);
+  private readonly storageKey = 'cartItems';
+
+  /** 購物車資料（初始化就從 localStorage 讀） */
+  private cartItems = new BehaviorSubject<CartItem[]>(this.loadCartItems());
   cartItems$ = this.cartItems.asObservable();
 
   /** 控制購物車側邊欄開關狀態 */
   private cartOpen = new BehaviorSubject<boolean>(false);
   cartOpen$ = this.cartOpen.asObservable();
 
-  /** 目前正在編輯的購物車項目） */
+  /** 目前正在編輯的購物車項目 */
   private editingItem = new BehaviorSubject<CartItem | null>(null);
   editingItem$ = this.editingItem.asObservable();
 
@@ -24,36 +26,58 @@ export class CartService {
     return this.cartItems.value;
   }
 
-  /** 打開購物車 */
+  /** localStorage 處理 */
+  /** 讀取 localStorage */
+  private loadCartItems(): CartItem[] {
+    try {
+      const data = localStorage.getItem(this.storageKey);
+      return data ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  /** 寫入 localStorage */
+  private saveCartItems(items: CartItem[]): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(items));
+  }
+
+  /** 統一更新（一定要走這裡） */
+  private setCartItems(items: CartItem[]): void {
+    this.cartItems.next(items);
+    this.saveCartItems(items);
+  }
+
+  /** UI 控制 */
   openCart(): void {
     this.cartOpen.next(true);
   }
 
-  /** 關閉購物車 */
   closeCart(): void {
     this.cartOpen.next(false);
   }
 
+  /** 購物車操作 */
   /** 新增餐點 */
   addItem(item: CartItem): void {
-    this.cartItems.next([...this.value, item]);
+    this.setCartItems([...this.value, item]);
   }
 
-  /** 更新購物車中的單筆餐點 */
+  /** 更新單筆 */
   updateItem(updatedItem: CartItem): void {
-    this.cartItems.next(
+    this.setCartItems(
       this.value.map(item =>
         item.cartItemId === updatedItem.cartItemId ? updatedItem : item
       )
     );
   }
-  
+
   /** 移除 */
   removeItem(cartItemId: number): void {
-    this.cartItems.next(
+    this.setCartItems(
       this.value.filter(item => item.cartItemId !== cartItemId)
     );
-}
+  }
 
   /** 更新數量 */
   updateQuantity(cartItemId: number, type: 'increase' | 'decrease'): void {
@@ -68,25 +92,24 @@ export class CartService {
       return { ...item, quantity };
     });
 
-    this.cartItems.next(updated);
+    this.setCartItems(updated);
   }
 
   /** 清空 */
   clear(): void {
-    this.cartItems.next([]);
+    this.setCartItems([]);
   }
 
-  /** 計算數量 */
+  /** 計算總數量 */
   getCount(): number {
     return this.value.reduce((sum, item) => sum + item.quantity, 0);
   }
 
-  /** 開始編輯指定餐點 */
+  /** 編輯功能 */
   startEdit(item: CartItem): void {
     this.editingItem.next(item);
   }
 
-  /** 清除編輯中的餐點 */
   clearEditing(): void {
     this.editingItem.next(null);
   }
