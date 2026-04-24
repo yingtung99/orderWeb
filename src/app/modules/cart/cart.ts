@@ -13,7 +13,6 @@ export class Cart {
   protected isClosing = false; // 控制購物車離場動畫
   protected cartItems: CartItem[] = []; // 當前購物車所有餐點資料
   protected expandedItemIds = new Set<number>(); // 控制每筆餐點詳細資訊展開狀態
-  protected removingIds = new Set<number>(); // 記錄正在刪除中的購物車項目（用來控制動畫）
 
   constructor(private cartService: CartService) {}
 
@@ -62,14 +61,8 @@ export class Cart {
 
   /** 刪除購物車中的餐點 */
   protected onRemove(item: CartItem): void {
-    if (this.removingIds.has(item.cartItemId)) return;
-
-    this.removingIds.add(item.cartItemId);
-
-    setTimeout(() => {
-      this.cartService.removeItem(item.cartItemId);
-      this.removingIds.delete(item.cartItemId);
-    }, 500);
+    this.cartService.removeItem(item.cartItemId);
+    this.expandedItemIds.delete(item.cartItemId);
   }
 
   /** 確認送出（目前先 console，之後可串 API） */
@@ -103,10 +96,5 @@ export class Cart {
   /** 判斷該筆餐點詳細資訊是否展開 */
   protected isExpanded(itemId: number): boolean {
     return this.expandedItemIds.has(itemId);
-  }
-
-  /** 判斷該項目是否正在刪除中 */
-  protected isRemoving(cartItemId: number): boolean {
-    return this.removingIds.has(cartItemId);
   }
 }

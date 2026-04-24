@@ -12,7 +12,7 @@
         @if (cartItems.length > 0) {
           <div class="cart-list">
             @for (item of cartItems; track item.cartItemId) {
-              <div class="cart-card" [class.removing]="isRemoving(item.cartItemId)">
+              <div class="cart-card">
                 <div class="cart-card-top">
                   <img class="food-img" [src]="item.image" [alt]="item.name">
                   <div class="item-content">
