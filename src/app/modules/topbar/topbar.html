@@ -12,11 +12,13 @@
     </div>
   </div>
 
-  <button class="view-btn" (click)="openCart()">
-    <span>檢視購物車</span>
-    <img class="icon" src="assets/icons/cart.svg" alt="">
-    @if (cartCount > 0) {
-      <span class="cart-badge">{{ cartCount }}</span>
-    }
-  </button>
+  @if (!hideCartBtn) {
+    <button class="view-btn" (click)="openCart()">
+      <span>檢視購物車</span>
+      <img class="icon" src="assets/icons/cart.svg" alt="">
+      @if (cartCount > 0) {
+        <span class="cart-badge">{{ cartCount }}</span>
+      }
+    </button>
+  }
 </div>

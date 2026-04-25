@@ -29,42 +29,6 @@
             </div>
           </div>
 
-          <!-- @if (openedOrderId === order.id) {
-            <div class="order-detail">
-              @for (item of order.items; track $index) {
-                <div class="food-row">
-                  <div class="food-left">
-                    <img class="food-img" [src]="item.image" [alt]="item.name">
-
-                    <div class="food-content">
-                      <div class="food-title-row">
-                        <span class="food-name">{{ item.name }}</span>
-
-                        @if (item.summary) {
-                          <span class="food-sub">{{ item.summary }}</span>
-                        }
-
-                        <span class="qty-badge">x{{ item.quantity }}</span>
-                      </div>
-
-                      <div class="tag-list">
-                        @for (group of item.optionGroups; track $index) {
-                          <span class="option-tag">
-                            {{ group.title }} - {{ group.items.join('、') }}
-                          </span>
-                        }
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="food-price">
-                    $ {{ item.price * item.quantity }}
-                  </div>
-                </div>
-              }
-            </div>
-          } -->
-
           <div class="order-detail-wrapper" [class.expanded]="openedOrderId === order.id">
             <div class="order-detail">
               @for (item of order.items; track $index) {
