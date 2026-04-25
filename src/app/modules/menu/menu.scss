@@ -271,5 +271,31 @@
 @media (max-width: 768px) {
     .menu-page {
         padding: 1.15rem 1.5rem 0 1.5rem;
-    }
+
+        .menu-header{
+            .search-input{
+                width: 11rem;
+                height: 2.25rem;
+                border-radius: 10px;
+
+                &::placeholder {
+                    font-size: 0.875rem;
+                }
+            }
+        }
+
+        .category-list{
+            .category-card{
+                padding: 0.5rem 0.75rem;
+
+                img{
+                    font-size: 0.75rem;
+                }
+
+                .category-name{
+                    font-size: 0.875rem;
+                }
+            }
+        }
+    } 
 }

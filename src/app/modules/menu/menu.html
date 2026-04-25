@@ -7,7 +7,7 @@
 
     <div class="category-list row g-3">
         @for (item of categoryList; track $index) {
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="col-4 col-sm-4 col-md-3 col-lg-2">
             <div class="category-card"
                 [class.active]="selectedCategory === item.category"
                 (click)="onClickCategory(item.category)">
