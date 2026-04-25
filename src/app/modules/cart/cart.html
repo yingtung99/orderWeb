@@ -106,3 +106,20 @@
     </aside>
   </div>
 }
+
+@if (showOrderSuccess) {
+  <div class="success-overlay" (click)="$event.stopPropagation()">
+    <div class="success-modal">
+      <div class="success-icon">
+        <img src="assets/icons/check.svg" alt="success">
+      </div>
+
+      <h3>訂單已送出</h3>
+      <p>餐點準備中，請您稍候！</p>
+
+      <button type="button" class="success-btn" (click)="goToRecord()">
+        確定
+      </button>
+    </div>
+  </div>
+}

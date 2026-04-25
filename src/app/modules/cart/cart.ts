@@ -15,6 +15,7 @@ export class Cart {
   protected isClosing = false; // 控制購物車離場動畫
   protected cartItems: CartItem[] = []; // 當前購物車所有餐點資料
   protected expandedItemIds = new Set<number>(); // 控制每筆餐點詳細資訊展開狀態
+  protected showOrderSuccess = false;
 
   constructor(private cartService: CartService, private orderService: OrderService, private router: Router) {}
 
@@ -67,18 +68,6 @@ export class Cart {
     this.expandedItemIds.delete(item.cartItemId);
   }
 
-  /** 確認送出 */
-  protected onCheckout(): void {
-    if (this.cartItems.length === 0) return;
-
-    this.orderService.createOrder(this.cartItems);
-
-    this.cartItems = [];
-    localStorage.removeItem('cartItems');
-
-    this.router.navigate(['/record']);
-  }
-
   /** 計算總金額（單價 × 數量 加總） */
   protected get totalPrice(): number {
     return this.cartItems.reduce(
@@ -105,5 +94,25 @@ export class Cart {
   /** 判斷該筆餐點詳細資訊是否展開 */
   protected isExpanded(itemId: number): boolean {
     return this.expandedItemIds.has(itemId);
+  }
+
+  /** 確認送出 */
+  protected onCheckout(): void {
+    if (this.cartItems.length === 0) return;
+    this.orderService.createOrder(this.cartItems);
+    this.cartService.clear();
+    this.expandedItemIds.clear();
+    this.showOrderSuccess = true;
+  }
+
+  /** 訂單送出成功後，關閉提示並前往訂單紀錄 */
+  protected goToRecord(): void {
+    this.showOrderSuccess = false;
+
+    this.closeCart();
+
+    setTimeout(() => {
+      this.router.navigate(['/record']);
+    }, 500);
   }
 }

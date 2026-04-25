@@ -152,6 +152,7 @@ export class CartService {
     this.editingItem.next(item);
   }
 
+  /** 清除目前編輯中的購物車項目，重置為新增模式 */
   clearEditing(): void {
     this.editingItem.next(null);
   }
