@@ -15,7 +15,7 @@ export class Cart {
   protected isClosing = false; // 控制購物車離場動畫
   protected cartItems: CartItem[] = []; // 當前購物車所有餐點資料
   protected expandedItemIds = new Set<number>(); // 控制每筆餐點詳細資訊展開狀態
-  protected showOrderSuccess = false;
+  protected showOrderSuccess = false; // 訂單成功
 
   constructor(private cartService: CartService, private orderService: OrderService, private router: Router) {}
 

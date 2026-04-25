@@ -7,8 +7,7 @@
           <div class="order-header" (click)="toggleOrder(order.id)">
             <div class="order-left">
               <div class="order-main">
-                <span class="order-id">訂單 #{{ order.id }}</span>
-
+                <span class="order-id">訂單 #{{ order.displayId }}</span>
                 <span class="status-badge" [class]="order.status">
                   {{ getStatusText(order.status) }}
                 </span>
