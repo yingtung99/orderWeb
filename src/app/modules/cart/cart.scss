@@ -187,6 +187,7 @@
           justify-content: center;
           cursor: pointer;
           flex-shrink: 0;
+          transition: background-color 0.2s ease, color 0.2s ease;
 
           position: relative;
 
@@ -234,6 +235,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
 
             img {
               width: 0.875rem;
@@ -277,6 +279,7 @@
   color: var(--text-light);
   font-size: 0.75rem;
   cursor: pointer;
+  transition: color 0.2s ease;
 
   img {
     width: 0.875rem;
@@ -288,6 +291,12 @@
   &.expanded img {
     transform: rotate(180deg);
   }
+
+  span{
+    &:hover{
+      text-decoration: underline;
+    }
+  }
 }
 
 .detail-wrapper {
@@ -298,7 +307,7 @@
 
   .divider {
     height: 1px;
-    background: var(--text-light);
+    background: var(--text-soft);
     margin: 0.5rem 0 0.5rem 0;
   }
 

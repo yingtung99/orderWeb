@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CartItem } from '../../models/CartItem';
 import { CartService } from '../../service/cart.service';
+import { OrderService } from '../../service/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +16,7 @@ export class Cart {
   protected cartItems: CartItem[] = []; // 當前購物車所有餐點資料
   protected expandedItemIds = new Set<number>(); // 控制每筆餐點詳細資訊展開狀態
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private orderService: OrderService, private router: Router) {}
 
   ngOnInit() {
     // 監聽購物車開關狀態（由 Topbar 控制）
@@ -65,9 +67,16 @@ export class Cart {
     this.expandedItemIds.delete(item.cartItemId);
   }
 
-  /** 確認送出（目前先 console，之後可串 API） */
+  /** 確認送出 */
   protected onCheckout(): void {
-    console.log('確認送出');
+    if (this.cartItems.length === 0) return;
+
+    this.orderService.createOrder(this.cartItems);
+
+    this.cartItems = [];
+    localStorage.removeItem('cartItems');
+
+    this.router.navigate(['/record']);
   }
 
   /** 計算總金額（單價 × 數量 加總） */

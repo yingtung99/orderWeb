@@ -1,0 +1,268 @@
+.record-page {
+  width: 100%;
+  height: 90vh;
+  padding: 1.25rem 1.75rem 0 1.75rem;
+  background: var(--bg-white);
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  overflow: hidden;
+
+  .record-title {
+    font-weight: bold;
+    flex-shrink: 0; 
+  }
+
+  .record-content{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+
+  .order-card {
+    width: 98.5%;
+    flex-shrink: 0; 
+    background: #fff;
+    border: 1px solid var(--bg-white);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      border-color: var(--primary-color);
+    }
+
+    &.expanded {
+      border-color: var(--primary-color);
+    }
+
+    .order-header {
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+  }
+}
+
+.order-left{
+  .order-main {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+
+    .order-id {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .status-badge {
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+
+      &.pending {
+        color: var(--primary-color);
+        background: #fff7e8;
+        border: 1px solid var(--primary-color);
+      }
+    }
+  }
+  .order-time {
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+}
+
+.order-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 6rem;
+
+  .total-row {
+    display: flex;
+    flex-direction: column;
+
+    .total-label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+
+    .total-price {
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+  }
+
+  .arrow-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.order-detail {
+  padding: 0.25rem 1.5rem;
+  border-top: 1px solid var(--border-gray);
+
+  .food-row {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--border-gray);
+    }
+
+    .food-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 0;
+
+      .food-img {
+        width: 4rem;
+        height: 4rem;
+      }
+
+      .food-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .food-title-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+
+          .food-name {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+
+          .food-sub {
+            font-size: 0.85rem;
+            color: var(--text-light);
+          }
+
+          .qty-badge {
+            padding: 0.075rem 0.45rem;
+            border-radius: 6px;
+            background: var(--bg-light);
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: bold;
+          }
+        }
+
+        .tag-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+
+          .option-tag {
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+            background: var(--tag-bg);
+            color: var(--tag-color);
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+
+    .food-price {
+      text-align: right;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .record-page{
+    padding: 1.15rem 1.5rem 0 1.5rem;
+  }
+
+  .record-list {
+    .order-card {
+      .order-header {
+        padding: 0.875rem 1rem;
+        align-items: flex-end;
+        gap: 0.75rem;
+      }
+    }
+  }
+
+  .order-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    .order-main {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+
+      .order-id {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .order-right {
+    flex-shrink: 0;
+    min-width: 4rem;
+    gap: 0.5rem;
+    align-items: flex-start;
+
+    .total-row{
+      .total-price{
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .order-detail{
+    .food-row{
+      gap: 0.35rem;
+
+      .food-left{
+        .food-img{
+          width: 3rem;
+          height: 3rem;
+        }
+
+        .food-content{
+          .food-title-row{
+            gap: 0.2rem;
+          }
+          .tag-list{
+            .option-tag{
+              font-size: 0.75rem;
+            }
+          }
+        }
+      }
+
+      .food-price{
+        min-width: 3rem;
+      }
+    }
+  }
+}
