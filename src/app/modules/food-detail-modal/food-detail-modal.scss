@@ -383,6 +383,32 @@
     }
 }
 
+@media (max-width: 768px) {
+    .modal-food-detail {
+        padding: 1.75rem;
+
+        .modal-card{
+            max-height: 92vh;
+
+            .modal-scroll{
+                .detail-body{
+                    padding-top: 4rem;
+
+                    .food-img{
+                        width: 65%;
+                    } 
+                }
+            }
+
+            .bottom-bar{
+                .total-price{
+                    font-size: 1.25rem;
+                }
+            }
+        }
+    }
+}
+
 @keyframes modalFadeIn {
   from {
     opacity: 0;

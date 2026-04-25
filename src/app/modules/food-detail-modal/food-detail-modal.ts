@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FoodItem, SetOption } from '../../models/Food';
 import { FoodCategory } from '../../models/Enum';
-import { CartItem, CartItemOptionGroup } from '../../models/CartItem';
+import { CartItem } from '../../models/CartItem';
 
 @Component({
   selector: 'app-food-detail-modal',
