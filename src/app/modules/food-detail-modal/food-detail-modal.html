@@ -46,7 +46,7 @@
                   (click)="selectSet(item.name)">
 
                   <div class="option-left">
-                    <div class="check-ui">
+                    <div class="check-ui" [class.active]="selectedSet === item.name">
                       @if (selectedSet === item.name) {
                         <img src="assets/icons/check.svg" alt="checked">
                       }
@@ -291,7 +291,7 @@
       <button class="add-cart-btn" type="button" (click)="onAddCart()">
         {{ editingItem ? '修改餐點' : '加入購物車' }}
         @if (editingItem) {
-          <img src="assets/icons/edit.svg" alt="edit">
+          <img src="assets/icons/edit-hover.svg" alt="edit">
         } @else {
           <img src="assets/icons/add.svg" alt="add">
         }
