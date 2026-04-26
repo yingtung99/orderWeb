@@ -472,6 +472,13 @@
   width: 7rem;
 }
 
+@media (max-width: 768px) {
+  .cart-sidebar{
+    height: 92vh;
+    margin: 1.75rem;
+  }
+}
+
 @keyframes successPop {
   from {
     opacity: 0;
