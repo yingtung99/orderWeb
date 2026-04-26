@@ -5,11 +5,12 @@ import { FoodCategory } from '../../models/Enum';
 import { CartItem } from '../../models/CartItem';
 import { CartService } from '../../service/cart.service';
 import { FoodDetailModal } from '../food-detail-modal/food-detail-modal';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [FormsModule, FoodDetailModal],
+  imports: [FormsModule, FoodDetailModal, DecimalPipe],
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
 })

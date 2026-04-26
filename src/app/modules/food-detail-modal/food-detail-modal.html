@@ -54,7 +54,7 @@
                     <span>{{ item.name }}</span>
                   </div>
 
-                  <span class="option-price">+ ${{ item.price }}</span>
+                  <span class="option-price">+ ${{ item.price | number:'1.0-0' }}</span>
                 </div>
               }
             </div>
@@ -113,7 +113,7 @@
                   </div>
 
                   @if (item.price > 0) {
-                    <span class="option-price">+ ${{ item.price }}</span>
+                    <span class="option-price">+ ${{ item.price | number:'1.0-0' }}</span>
                   }
                 </div>
               }
@@ -148,7 +148,7 @@
                   </div>
 
                   @if (item.price > 0) {
-                    <span class="option-price">+ ${{ item.price }}</span>
+                    <span class="option-price">+ ${{ item.price | number:'1.0-0' }}</span>
                   }
                 </div>
               }
@@ -203,7 +203,7 @@
                     <span>{{ item.name }}</span>
                   </div>
 
-                  <span class="option-price">+ ${{ item.price }}</span>
+                  <span class="option-price">+ ${{ item.price | number:'1.0-0' }}</span>
                 </div>
               }
             </div>
@@ -226,7 +226,7 @@
                     <span>{{ item.name }}</span>
                   </div>
 
-                  <span class="option-price">+ ${{ item.price }}</span>
+                  <span class="option-price">+ ${{ item.price | number:'1.0-0' }}</span>
                 </div>
               }
             </div>
@@ -287,7 +287,7 @@
     </div>
 
     <div class="bottom-bar">
-      <div class="total-price">${{ totalPrice }}</div>
+      <div class="total-price">${{ totalPrice | number:'1.0-0' }}</div>
       <button class="add-cart-btn" type="button" (click)="onAddCart()">
         {{ editingItem ? '修改餐點' : '加入購物車' }}
         @if (editingItem) {

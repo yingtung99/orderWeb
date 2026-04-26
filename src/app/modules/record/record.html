@@ -25,7 +25,7 @@
             <div class="order-right">
               <div class="total-row">
                 <span class="total-label">總金額</span>
-                <span class="total-price">$ {{ order.totalPrice }}</span>
+                <span class="total-price">$ {{ order.totalPrice | number:'1.0-0' }}</span>
               </div>
               <img class="arrow-icon" [class.expanded]="openedOrderId === order.id"
                 src="assets/icons/arrow-down.svg" alt="收合">
@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="food-price">
-                    $ {{ item.price * item.quantity }}
+                    $ {{ item.price * item.quantity | number:'1.0-0' }}
                   </div>
                 </div>
               }

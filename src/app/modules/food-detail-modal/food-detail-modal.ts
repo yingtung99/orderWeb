@@ -2,10 +2,11 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { FoodItem, SetOption } from '../../models/Food';
 import { FoodCategory } from '../../models/Enum';
 import { CartItem } from '../../models/CartItem';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-food-detail-modal',
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './food-detail-modal.html',
   styleUrl: './food-detail-modal.scss',
 })

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Order } from '../../models/Order';
 import { OrderService } from '../../service/order.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-record',
   standalone: true,
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './record.html',
   styleUrl: './record.scss',
 })

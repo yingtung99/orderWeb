@@ -51,7 +51,7 @@
                         </button>
                       </div>
 
-                      <div class="item-price">${{ item.price * item.quantity }}</div>
+                      <div class="item-price">${{ item.price * item.quantity | number:'1.0-0' }}</div>
                     </div>
                   </div>
                 </div>
@@ -93,7 +93,7 @@
         <div class="footer-actions">
           <div class="total-block">
             <div class="total-label">總金額</div>
-            <div class="total-price">$ {{ totalPrice }}</div>
+            <div class="total-price">$ {{ totalPrice | number:'1.0-0' }}</div>
           </div>
 
           <button class="confirm-btn" type="button"
