@@ -1,0 +1,32 @@
+<div class="home-page">
+  <div class="home-card">
+    <div class="brand">
+      <span class="title-light">Maisy’</span>Meal<span class="dot">.</span>
+    </div>
+
+    <h2 class="home-title">歡迎光臨</h2>
+    <p class="home-subtitle">請輸入內用號碼開始點餐</p>
+
+    <input
+      type="text"
+      class="form-control table-input"
+      placeholder="例如：A01"
+      [(ngModel)]="tableNumber"
+      (input)="showError = false"
+    >
+
+    @if (showError) {
+      <div class="error-text">
+        請先輸入內用號碼
+      </div>
+    }
+
+    <button
+      type="button"
+      class="confirm-btn"
+      (click)="confirmTableNumber()"
+    >
+      確認開始點餐
+    </button>
+  </div>
+</div>
