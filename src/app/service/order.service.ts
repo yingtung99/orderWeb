@@ -17,29 +17,22 @@ export class OrderService {
   createOrder(items: CartItem[]): Order {
     const now = new Date();
 
-    // 產生日期字串（例：20250425）
-    const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const fullId = `ORD${Date.now()}`; // 系統ID
+
+    // 取後 6 碼當顯示用
+    const displayId = fullId.slice(-6);
 
     const orders = this.getOrders();
 
-    // 計算「今天」已有幾筆訂單
-    const todayOrders = orders.filter(o =>
-      o.displayId?.startsWith(datePart)
-    );
-
-    // 產生當天序號（001, 002...）
-    const seq = String(todayOrders.length + 1).padStart(3, '0');
-
     const order: Order = {
-      id: `ORD${Date.now()}`,                // 系統用 ID（唯一）
-      displayId: `${datePart}-${seq}`,       // 顯示用 ID（給使用者看）
-      createdAt: now.toISOString(),          // 建立時間
-      items,                                 // 訂單餐點
-      totalPrice: items.reduce((s, i) => s + i.price * i.quantity, 0), // 總金額
-      status: 'pending'                      // 初始狀態
+      id: fullId,             // 系統用
+      displayId,              // 顯示用（短ID）
+      createdAt: now.toISOString(),
+      items,
+      totalPrice: items.reduce((s, i) => s + i.price * i.quantity, 0),
+      status: 'pending'
     };
 
-    // 存入 localStorage（新訂單放最前面）
     localStorage.setItem(this.storageKey, JSON.stringify([order, ...orders]));
 
     return order;
