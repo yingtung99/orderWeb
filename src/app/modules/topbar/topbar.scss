@@ -11,6 +11,42 @@
     gap: 1rem;
   }
 
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .table-badge {
+    margin-left: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid var(--primary-color);
+    font-size: 0.875rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    img{
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .icon{
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    &:hover {
+      background: var(--remove-color);
+      transform: translateY(-1px);
+    }
+  }
+
   .view-btn {
     background: var(--primary-color);
     color: #fff;
@@ -85,6 +121,102 @@
     .dot{
       color: var(--primary-color);
     }
+  }
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.confirm-modal {
+  position: relative;
+  width: min(22rem, 100%);
+  padding: 3.5rem 1.75rem 1.75rem;
+  background: #fff;
+  border-radius: 1.5rem;
+  text-align: center;
+  animation: successPop 0.35s ease;
+
+  h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-light);
+  }
+}
+
+.confirm-icon {
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  font-size: 2.75rem;
+  font-weight: bold;
+  padding-left: 0.35rem;
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18);
+
+  &.warning {
+    background: var(--primary-color);
+  }
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.cancel-btn,
+.confirm-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 800;
+  width: 7rem;
+}
+
+.cancel-btn {
+  background: #eee;
+  color: var(--text-dark);
+}
+
+.confirm-btn {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class Home {
   protected tableNumber = '';
   protected showError = false;
 
-  constructor(private router: Router) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   protected confirmTableNumber(): void {
     const value = this.tableNumber.trim();
@@ -22,6 +23,8 @@ export class Home {
       return;
     }
 
+    localStorage.clear();
+    this.cartService.clear();
     localStorage.setItem('tableNumber', value);
     this.router.navigate(['/menu']);
   }

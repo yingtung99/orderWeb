@@ -27,6 +27,11 @@
   gap: 0.875rem;
   width: 100%;
 
+  .empty-text {
+    font-size: 1.15rem;
+    color: var(--text-light);
+  }
+
   .order-card {
     width: 98.5%;
     flex-shrink: 0; 

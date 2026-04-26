@@ -1,4 +1,13 @@
 <div class="topbar">
+  <!-- 桌機版 -->
+  @if (tableNumber) {
+    <div class="table-badge d-none d-md-flex" (click)="changeTable()">
+      <img src="assets/icons/table-number.svg" alt="">
+      桌號 : {{ tableNumber }}
+      <img class="icon" src="assets/icons/edit-table.svg" alt="edit">
+    </div>
+  }
+
   <div class="topbar-left">
     <button
       class="mobile-menu-btn d-md-none"
@@ -12,13 +21,59 @@
     </div>
   </div>
 
-  @if (!hideCartBtn) {
-    <button class="view-btn" (click)="openCart()">
-      <span>檢視購物車</span>
-      <img class="icon" src="assets/icons/cart.svg" alt="">
-      @if (cartCount > 0) {
-        <span class="cart-badge">{{ cartCount }}</span>
-      }
-    </button>
-  }
+  <div class="topbar-right">
+
+    <!--  手機版 -->
+    @if (tableNumber) {
+      <div class="table-badge d-md-none" (click)="changeTable()">
+        <img src="assets/icons/table-number.svg" alt="">
+        桌號 {{ tableNumber }}
+        <img class="icon" src="assets/icons/edit-table.svg" alt="edit">
+      </div>
+    }
+
+    @if (!hideCartBtn) {
+      <button class="view-btn" (click)="openCart()">
+        <span>檢視購物車</span>
+        <img class="icon" src="assets/icons/cart.svg" alt="">
+        @if (cartCount > 0) {
+          <span class="cart-badge">{{ cartCount }}</span>
+        }
+      </button>
+    }
+  </div>  
 </div>
+
+@if (showChangeTableConfirm) {
+  <div class="confirm-overlay">
+    <div class="confirm-modal">
+      <div class="confirm-icon warning">!</div>
+      <h3>更換桌號</h3>
+      <p>將清空目前購物車內容 !</p>
+      <div class="confirm-actions">
+        <button class="cancel-btn" (click)="cancelChangeTable()">取消</button>
+        <button class="confirm-btn" (click)="confirmChangeTable()">確定</button>
+      </div>
+
+    </div>
+  </div>
+}
+
+@if (showCannotChangeTable) {
+  <div class="confirm-overlay">
+    <div class="confirm-modal">
+      <div class="confirm-icon warning">!</div>
+      <h3>無法更換桌號</h3>
+      <p>已有訂單紀錄，不能更換桌號</p>
+      <div class="confirm-actions">
+        <button
+          class="confirm-btn"
+          type="button"
+          (click)="showCannotChangeTable = false"
+        >
+          確定
+        </button>
+      </div>
+    </div>
+  </div>
+}

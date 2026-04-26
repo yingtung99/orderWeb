@@ -2,6 +2,10 @@
   <h3 class="record-title">訂單紀錄</h3>
   <div class="record-content">
     <div class="record-list">
+      @if (orders.length === 0) {
+        <span class="empty-text">目前沒有訂單紀錄</span>
+      }
+
       @for (order of orders; track order.id) {
         <div class="order-card" [class.expanded]="openedOrderId === order.id">
           <div class="order-header" (click)="toggleOrder(order.id)">
