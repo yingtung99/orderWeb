@@ -50,21 +50,25 @@
         </div>
         <div class="menu-section food-section">
             <h5 class="section-title">餐點</h5>
-            <div class="row g-3">
+            <div class="row g-3 food-row">
                 @for (item of filteredFoodList; track item.id) {
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2 food-card-col">
-                        <div class="food-card vertical-card" (click)="openDetail(item)">
-                            <img [src]="item.image" [alt]="item.name">
-                            <h6 class="food-name">{{ item.name }}</h6>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2 food-card-col">
+                    <div class="food-card vertical-card" (click)="openDetail(item)">
+                    <img [src]="item.image" [alt]="item.name">
+                    <h6 class="food-name">{{ item.name }}</h6>
 
-                            <div class="food-meta gap-2">
-                                <div class="price">${{ item.price | number:'1.0-0' }}</div>
-                                <button class="add-btn" type="button" (click)="openDetail(item); $event.stopPropagation()">
-                                    <img class="icon" src="assets/icons/add.svg" alt="">
-                                </button>
-                            </div>
-                        </div>
+                    <div class="food-meta gap-2">
+                        <div class="price">${{ item.price | number:'1.0-0' }}</div>
+                        <button
+                        class="add-btn"
+                        type="button"
+                        (click)="openDetail(item); $event.stopPropagation()"
+                        >
+                        <img class="icon" src="assets/icons/add.svg" alt="">
+                        </button>
                     </div>
+                    </div>
+                </div>
                 }
             </div>
         </div>

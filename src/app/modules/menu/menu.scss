@@ -1,6 +1,6 @@
 .menu-page {
     width: 100%;
-    height: 90%;
+    height: 94%;
     background: var(--bg-white);
     padding: 1.25rem 2rem 0 2rem;
     display: flex;
@@ -265,13 +265,15 @@
             }
         }
 
-        .food-section .row {
-            padding-bottom: 2rem;
+        .food-section .food-row::after {
+            content: "";
+            flex: 0 0 100% !important;
+            height: calc(2rem + env(safe-area-inset-bottom)) !important;
         }
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
     .menu-page {
         padding: 1.15rem 1.5rem 0 1.5rem;
         gap: 0.75rem;
@@ -355,10 +357,6 @@
         .menu-content {
             margin-top: 0;
 
-            .food-section .row {
-                padding-bottom: calc(6rem + env(safe-area-inset-bottom));
-            }
-
             .popular-section {
                 gap: 0.75rem;
 
@@ -409,6 +407,12 @@
                         font-size: 0.75rem;
                     }
                 }
+            }
+
+            .food-section .food-row::after {
+                content: "";
+                flex: 0 0 100% !important;
+                height: calc(7rem + env(safe-area-inset-bottom)) !important;
             }
         }
     }
