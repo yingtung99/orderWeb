@@ -13,6 +13,7 @@
       placeholder="例如：A01"
       [(ngModel)]="tableNumber"
       (input)="showError = false"
+      (keydown.enter)="confirmTableNumber()"
     >
 
     @if (showError) {

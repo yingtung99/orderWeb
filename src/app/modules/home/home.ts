@@ -15,6 +15,7 @@ export class Home {
 
   constructor(private cartService: CartService, private router: Router) {}
 
+  /** 確認桌號 */
   protected confirmTableNumber(): void {
     const value = this.tableNumber.trim();
 
