@@ -5,21 +5,24 @@
             placeholder="Search" [(ngModel)]="searchKeyword">
     </div>
 
-    <div class="category-list row g-3">
-        @for (item of categoryList; track $index) {
-        <div class="col-4 col-sm-4 col-md-3 col-lg-2">
-            <div class="category-card"
-                [class.active]="selectedCategory === item.category"
-                (click)="onClickCategory(item.category)">
-                <img [src]="item.icon" alt="">
-                <div class="category-name">{{ item.name }}</div>
-            </div>
+    <div class="category-scroll-wrap">
+        <div class="category-list row g-3">
+            @for (item of categoryList; track $index) {
+                <div class="category-col col-4 col-sm-4 col-md-3 col-lg-2">
+                    <div class="category-card"
+                        [class.active]="selectedCategory === item.category"
+                        (click)="onClickCategory(item.category)">
+                        <img [src]="item.icon" alt="">
+                        <div class="category-name">{{ item.name }}</div>
+                    </div>
+                </div>
+            }
         </div>
-        }
     </div>
+    
 
     <div class="menu-content">
-        <div class="menu-section">
+        <div class="menu-section popular-section">
             <h5 class="section-title">熱銷推薦</h5>
             <div class="row g-3">
                 @for (item of popularList; track $index) {
